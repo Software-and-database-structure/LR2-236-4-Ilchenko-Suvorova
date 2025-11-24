@@ -1,0 +1,49 @@
+/* Дополнительные стили */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 40pt;
+    text-transform: uppercase;
+    text-align: center;
+    background: url("bg.jpg") left / auto 100% no-repeat;
+    padding: 20px;
+    margin: 0;
+}
+
+nav {
+    font-size: 16pt;
+    width: 150px;
+    float: left;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+nav a {
+    display: block;
+    margin: 10px 0px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+nav a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+main {
+    margin-left: 170px;
+    padding: 15px;
+}
+
+div {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
