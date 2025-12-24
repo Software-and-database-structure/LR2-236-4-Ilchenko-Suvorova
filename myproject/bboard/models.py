@@ -10,8 +10,6 @@ class Rubric(models.Model):
 from django.db import models
 from .validators import validate_positive, MinMaxValueValidator # Импорт валидаторов
 
-# ... (определение Rubric)
-
 from django.db import models
 from .validators import validate_positive, MinMaxValueValidator
 
@@ -32,13 +30,15 @@ class Bb(models.Model):
         related_name='entries'
     )
     
-    # !!! ДОБАВИТЬ ЭТО ПОЛЕ !!!
+    image = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Изображение', null=True, blank=True)
+    
     published = models.DateTimeField(auto_now_add=True, db_index=True)
     
-    # Добавление мета-класса для сортировки, который также может быть причиной ошибки, 
-    # если он был в коде, но здесь не показан.
+    is_active = models.BooleanField(default=True, verbose_name='Активно')
+    
+    views_count = models.PositiveIntegerField(default=0, verbose_name='Просмотры')
+    
     class Meta:
-        # Убедитесь, что мета-класс содержит поле 'ordering'
         ordering = ['-published'] 
         verbose_name = 'Объявление'
         verbose_name_plural = 'Объявления'
@@ -46,9 +46,7 @@ class Bb(models.Model):
     def __str__(self):
         return self.title
 
-# ... (остальные модели)
 
-# 3. Дополнительная вторичная модель
 class Comment(models.Model):
     text = models.TextField()
     
@@ -58,13 +56,18 @@ class Comment(models.Model):
         on_delete=models.RESTRICT
     )
     
+    rating = models.IntegerField(
+        default=0,
+        validators=[
+            MinMaxValueValidator(min_value=0, max_value=5)
+        ],
+        verbose_name='Рейтинг'
+    )
+    
     def __str__(self):
         return self.text[:20] + '...'
     
     
-# ... (продолжение models.py)
-
-# 4. Модель первичная (сторона "один" для 1:1)
 class UserProfile(models.Model):
     user_name = models.CharField(max_length=150, unique=True)
     

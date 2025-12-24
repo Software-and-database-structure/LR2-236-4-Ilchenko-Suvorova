@@ -1,13 +1,28 @@
-{% extends "layout/basic.html" %}
+{{% extends "layout/basic.html" %}
 
 {% block content %}
 {% for bb in bbs %}
-<div>
+<div style="border-bottom: 1px solid #ccc; margin-bottom: 20px; padding-bottom: 10px;">
     <h2>{{ bb.title }}</h2>
+    
+    {% if bb.image %}
+        <div class="bb-image" style="margin: 10px 0;">
+            <img src="{{ bb.image.url }}" alt="{{ bb.title }}" style="max-width: 300px; height: auto; display: block;">
+        </div>
+    {% else %}
+        <p><em>(Изображение отсутствует)</em></p>
+    {% endif %}
+
     <p>{{ bb.content }}</p>
-    <p><p><a href="{% if bb.rubric %}{% url 'rubric_bbs' bb.rubric.pk %}{% else %}#{% endif %}">
-    {{ bb.rubric.name }}</a></p>
-    <p>{{ bb.published|date:"d.m.Y H:i:s" }}</p>
+    <p><strong>Цена: {{ bb.price }} руб.</strong></p>
+    
+    <p>
+        Рубрика: 
+        <a href="{% if bb.rubric %}{% url 'rubric_bbs' bb.rubric.pk %}{% else %}#{% endif %}">
+            {{ bb.rubric.name }}
+        </a>
+    </p>
+    <p><small>Опубликовано: {{ bb.published|date:"d.m.Y H:i:s" }}</small></p>
 </div>
 {% endfor %}
 {% endblock %}
